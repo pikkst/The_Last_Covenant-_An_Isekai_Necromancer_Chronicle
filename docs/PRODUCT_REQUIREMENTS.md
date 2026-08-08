@@ -35,7 +35,7 @@ A player must be able to:
 - trust that the game saved correctly;
 - review discoveries, relationships, quests, and consequences;
 - recover from connection loss and conflicting sessions;
-- opt out of external AI processing.
+- play without any dependency on external narrative or model services.
 
 ## Design goals
 
@@ -44,7 +44,7 @@ A player must be able to:
 - At least three viable philosophical approaches in the MVP.
 - No mandatory grinding.
 - No pay-to-win or energy timers.
-- AI is never required for core play.
+- No LLM, generative AI, or cloud AI service is used by the game.
 - A complete Act I must feel satisfying even before later acts exist.
 
 ## MVP scope
@@ -114,7 +114,7 @@ Command times out -> client checks command status using idempotency key -> serve
 - FR-009: Named undead preserve identity and history across encounters.
 - FR-010: Combat can be reproduced from starting state, commands, and RNG seed.
 - FR-011: The player can export and import a validated save.
-- FR-012: Optional AI can be disabled without changing available mechanics or outcomes.
+- FR-012: All runtime narrative text comes from versioned, human-authored content.
 - FR-013: The application presents explicit save, stale, offline, error, and conflict states.
 - FR-014: The codex reveals only discovered knowledge.
 - FR-015: The player can delete account data according to the published policy.
@@ -122,14 +122,14 @@ Command times out -> client checks command status using idempotency key -> serve
 ## Non-functional requirements
 
 - NFR-001: WCAG 2.2 AA target.
-- NFR-002: Common command response p95 below 500 ms excluding optional AI presentation.
+- NFR-002: Common command response p95 below 500 ms.
 - NFR-003: Initial usable page under 3 seconds on defined mid-tier mobile and constrained network profile.
 - NFR-004: No loss of committed save data during a single service restart.
 - NFR-005: RPO <= 24 hours and initial RTO <= 4 hours, improved before commercial launch.
 - NFR-006: All services emit correlated structured diagnostics.
 - NFR-007: Security-sensitive actions are audited.
 - NFR-008: Content compilation is deterministic.
-- NFR-009: Canonical play works with all external AI providers unavailable.
+- NFR-009: Gameplay has no runtime dependency on LLMs, generative models, or cloud AI services.
 - NFR-010: Privacy-sensitive data is minimized and retained only as documented.
 
 ## Business model guardrails
