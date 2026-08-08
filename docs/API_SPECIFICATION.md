@@ -173,7 +173,7 @@ Separate policies for:
 - authentication;
 - game commands;
 - exports/imports;
-- optional AI rendering;
+- export/import and other resource-intensive rendering operations;
 - recovery flows.
 
 Imports, text, arrays, and event history have explicit maximum sizes. Return `429` with safe retry guidance.
