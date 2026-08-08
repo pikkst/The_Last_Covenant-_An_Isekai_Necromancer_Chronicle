@@ -158,3 +158,21 @@ The MVP is Act I, not the end of the product plan. The full campaign continues t
 See the [complete campaign outline](docs/story/MASTER_STORY_OUTLINE.md) and [documentation roadmap](docs/DOCUMENTATION_ROADMAP.md).
 
 Full release is planned as a 40–70 hour first campaign with six disciplines, eight core companions, 8–12 major regions, approximately 150–220 substantial quests, and state-driven ending families. These are production targets subject to validation, not promises of uncontrolled scope.
+
+
+## Signature simulation systems
+
+The full game is additionally defined by ten interconnected signature systems:
+
+- [Identity and Memory](docs/systems/IDENTITY_AND_MEMORY_SYSTEM.md): Earthborn, Vael, and the player's emerging self compete or coexist.
+- [Promises and Covenants](docs/systems/PROMISES_AND_COVENANTS.md): spoken obligations persist across death and become enforceable game state.
+- [Knowledge and Truth](docs/systems/KNOWLEDGE_AND_TRUTH_SYSTEM.md): facts, testimony, rumors, lies, and memories retain source and confidence.
+- [Dynamic Legends](docs/systems/DYNAMIC_LEGENDS.md): regions and factions create different interpretations of the same actions.
+- [Emergent Archetypes](docs/systems/EMERGENT_ARCHETYPES.md): behavior creates identities instead of selecting a morality class.
+- [World Clock and Faction Plans](docs/systems/WORLD_CLOCK_AND_FACTION_PLANS.md): the world advances through in-game actions, never real-world waiting.
+- [Player Sanctuary](docs/systems/PLAYER_SANCTUARY.md): the protagonist's home evolves into a social and political institution.
+- [Rival Necromancers](docs/systems/RIVAL_NECROMANCERS.md): authored rivals observe, adapt, compete, and contest necromantic philosophy.
+- [Companion Relationship Network](docs/systems/COMPANION_RELATIONSHIP_NETWORK.md): companions build independent relationships and alliances.
+- [After-Death Gameplay](docs/systems/AFTER_DEATH_GAMEPLAY.md): death becomes a playable state with vessels, memory costs, and final risk.
+
+These systems share deterministic events, stable IDs, explicit knowledge boundaries, and versioned human-authored content.
