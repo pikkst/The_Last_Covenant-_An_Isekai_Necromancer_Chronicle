@@ -122,3 +122,16 @@ The player sees known composition, risks, obligations, autonomy, maintenance, an
 ## Testing
 
 Use combinatorial validation to prevent invalid component states, orphaned identities, duplicated unique spirits, negative costs, and resurrection after confirmed final destruction.
+
+
+## Progression, equipment, and fusion
+
+Persistent summons use the full systems defined in:
+
+- [Summon Progression and Customization](SUMMON_PROGRESSION_AND_CUSTOMIZATION.md);
+- [Summon Equipment and Inventory](SUMMON_EQUIPMENT_AND_INVENTORY.md);
+- [Summon Fusion and Evolution](SUMMON_FUSION_AND_EVOLUTION.md).
+
+Creation establishes the summon’s initial composition. It does not freeze the entity. A named summon can gain levels/mastery, unlock its own skills, equip armor, weapons, rings, amulets, relics, and anchors, change behavior policies, evolve its vessel, or enter a valid fusion.
+
+All transitions preserve identity provenance, equipment ownership, unique-item integrity, covenant state, and historical consequences.
