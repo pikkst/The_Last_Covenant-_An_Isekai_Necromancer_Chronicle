@@ -18,7 +18,7 @@ NestJS HTTP application responsible for authentication, authorization, validatio
 
 ### Worker
 
-BullMQ consumers for email, retention, exports, content processing, analytics aggregation, and optional AI prose. Jobs are idempotent and observable.
+BullMQ consumers for email, retention, exports, content processing, analytics aggregation, and scheduled operational work. Jobs are idempotent and observable.
 
 ### Web
 
@@ -55,7 +55,7 @@ Authoring schemas, semantic validation, compiler, and artifact readers.
 
 ### infrastructure adapters
 
-Prisma repositories, Redis, queues, object storage, email, telemetry, and AI providers live outside the domain.
+Prisma repositories, Redis, queues, object storage, email, and telemetry live outside the domain.
 
 ## Command lifecycle
 
@@ -163,9 +163,31 @@ Measure:
 - queue depth, retries, age, and dead letters;
 - save sizes and revision counts;
 - content validation failures;
-- AI fallback/timeout/budget without prompt bodies;
+- authored-content rendering failures and template coverage;
 - authentication abuse signals.
 
 ## Data retention
 
-Define retention for sessions, audit events, command results, logs, exports, deleted accounts, and AI caches. Account deletion uses a documented workflow with legal/security exceptions and completion evidence.
+Define retention for sessions, audit events, command results, logs, exports, deleted accounts, and disposable rendering caches. Account deletion uses a documented workflow with legal/security exceptions and completion evidence.
+
+
+## Docker runtime
+
+The backend is Docker-first. Local development and production run the API and worker in containers. Docker Compose must define at minimum:
+
+- `api`: NestJS application;
+- `worker`: BullMQ workers;
+- `postgres`: canonical database with a named development volume;
+- `redis`: queues, limits, and disposable caches;
+- `migrate`: one-shot database migration job;
+- optional `seed`: explicit development content/data seeding.
+
+Backend images use multi-stage builds, run as a non-root user, expose health checks, validate configuration before accepting traffic, and shut down gracefully. Application startup must wait on dependency health rather than fixed sleeps. Production may use managed PostgreSQL or Redis, but the API and worker remain deployable as OCI containers.
+
+A fresh clone must be able to build and start the complete local backend with:
+
+```bash
+docker compose up -d --build
+```
+
+Database migrations must be explicit and safe; API replicas must not race to run migrations during normal startup.
