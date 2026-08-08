@@ -176,3 +176,19 @@ The full game is additionally defined by ten interconnected signature systems:
 - [After-Death Gameplay](docs/systems/AFTER_DEATH_GAMEPLAY.md): death becomes a playable state with vessels, memory costs, and final risk.
 
 These systems share deterministic events, stable IDs, explicit knowledge boundaries, and versioned human-authored content.
+
+
+## Summon building
+
+Persistent summons have their own progression and customization:
+
+- individual levels/mastery and skill trees;
+- body- and role-specific attributes;
+- weapons, armor, rings, amulets, cloaks, relics, and spirit anchors;
+- equipment attunement, gifts, inheritance, repair, and loadouts;
+- declarative combat behavior and autonomy;
+- vessel evolution and hybrid skills;
+- temporary or permanent fusion with explicit identity and consent rules;
+- visual identity, names, titles, colors, engravings, and captain insignia.
+
+See [Summon Progression](docs/systems/SUMMON_PROGRESSION_AND_CUSTOMIZATION.md), [Summon Equipment](docs/systems/SUMMON_EQUIPMENT_AND_INVENTORY.md), and [Summon Fusion](docs/systems/SUMMON_FUSION_AND_EVOLUTION.md).
