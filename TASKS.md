@@ -547,3 +547,51 @@ Document offline/export options, final server behavior, source/content preservat
 - implement disembodied perception, stability, anchors, rescue, vessel compatibility, memory costs, pacts, final passage, successor outcomes, and recovery checkpoints;
 - protect against duplication and checkpoint exploits;
 - test every supported death configuration.
+
+
+## Phase 17 — Summon progression, equipment, and fusion
+
+### [ ] M076 — Persistent summon progression model
+
+- implement named summon growth, mastery, attributes, roles, titles, memories, injuries, autonomy, and progression history;
+- preserve progression across vessel replacement and supported transformations;
+- add deterministic gain and migration tests.
+
+### [ ] M077 — Summon skill graph engine
+
+- implement universal, vessel, identity, role, equipment, relationship, evolution, fusion, and unique-story skill sources;
+- validate prerequisites, exclusions, body compatibility, autonomy, and irreversible choices;
+- provide graph and accessible list projections.
+
+### [ ] M078 — Summon equipment and loadouts
+
+- implement body-specific slots, weapons, armor, rings, amulets, cloaks, relics, anchors, command foci, durability, attunement, provenance, gifts, inheritance, and loadout templates;
+- integrate crafting and combat;
+- prevent duplication through death, fusion, vessel transfer, concurrency, export/import, and checkpoint restoration.
+
+### [ ] M079 — Summon behavior customization
+
+- implement bounded target priorities, preferred range, protection target, retreat threshold, lethal policy, spirit restrictions, ability conditions, and emergency autonomy;
+- keep policies declarative and prevent executable player scripts.
+
+### [ ] M080 — Fusion and evolution engine
+
+- implement reinforcement, grafting, vessel evolution, memory synthesis, cooperative fusion, dominant fusion, composite birth, coercive assimilation, and formation fusion;
+- validate consent, identity, components, equipment, promises, compatibility, inheritance, costs, instability, and reversibility;
+- make every result deterministic and transactional.
+
+### [ ] M081 — Summon management experience
+
+- build summon roster, detailed summon sheet, skill tree/list, equipment interface, behavior editor, evolution tree, fusion laboratory, visual preview, warnings, and accessible keyboard/mobile flows;
+- distinguish gifts from forced assignment for autonomous summons.
+
+### [ ] M082 — Army template integration
+
+- allow validated equipment, behavior, and progression templates for generic units;
+- preserve full individual builds for captains and named summons;
+- avoid army-scale item and skill micromanagement.
+
+### [ ] M083 — Summon balance and exploit gate
+
+- simulate early named-summon viability, specialist builds, fusion paths, equipment sets, autonomy, maintenance, and army scaling;
+- test unique-item duplication, recursive fusion, stat overflow, invalid reversal, identity cloning, and rollback failures.
