@@ -6,7 +6,7 @@ This file is authoritative for every human or automated contributor working in t
 
 ## Product invariant
 
-The Last Covenant is a deterministic narrative RPG. The server owns canonical game state. Generated prose, client state, and external AI providers must never decide rules, rewards, legality, quest outcomes, or save-game truth.
+The Last Covenant is a deterministic narrative RPG. The server owns canonical game state. All narrative prose is human-authored, versioned repository content. Client state or external services must never decide rules, rewards, legality, quest outcomes, or save-game truth.
 
 ## Required workflow
 
@@ -35,11 +35,11 @@ Expected monorepo ownership:
 
 Forbidden coupling:
 
-- game engine importing Next.js, NestJS, Prisma, Redis, queues, or AI SDKs;
+- game engine importing Next.js, NestJS, Prisma, Redis, queues, or external service SDKs;
 - frontend importing persistence models;
 - content executing arbitrary JavaScript;
 - API responses exposing internal database records;
-- provider SDK types crossing adapter boundaries;
+- infrastructure SDK types crossing adapter boundaries;
 - domain logic using wall-clock time or unseeded randomness directly.
 
 ## Domain rules
@@ -72,9 +72,9 @@ Forbidden coupling:
 - Authenticate server-side.
 - Authorize every save-slot operation by owner.
 - Use generic authentication errors.
-- Never log passwords, tokens, raw cookies, secrets, full AI prompts containing personal data, or complete save payloads.
+- Never log passwords, tokens, raw cookies, secrets, private authored content payloads, or complete save payloads.
 - Apply CSRF protection where cookie authentication is used.
-- Apply rate limits to authentication, commands, export/import, and AI endpoints.
+- Apply rate limits to authentication, commands, export/import, and other resource-intensive endpoints.
 - Parse and limit request bodies.
 - Never trust client-calculated stats, rewards, inventory, skill availability, or dice results.
 
@@ -103,27 +103,9 @@ Narrative guidelines:
 - use content warnings for intense themes;
 - do not copy protected settings or characters.
 
-## AI integration rules
+## Narrative content rules
 
-AI is optional, replaceable, and disabled by default.
-
-Allowed uses:
-
-- stylistic variants of already-resolved events;
-- summaries of canonical logs;
-- NPC phrasing constrained by known facts;
-- development-time content suggestions that receive human review.
-
-Prohibited uses:
-
-- changing canonical state;
-- inventing items, skills, facts, rewards, or quest results;
-- deciding combat outcomes;
-- bypassing content ratings;
-- direct database or tool access;
-- silently sending player content to a cloud provider.
-
-All AI output is untrusted, schema-validated, length-limited, filtered, and backed by a deterministic fallback.
+All production narrative prose must be human-authored, versioned, reviewed, and compiled from repository content. Do not add LLM SDKs, generative AI modules, model endpoints, prompt pipelines, or cloud AI services. Runtime text selection may use deterministic templates and canonical event data only.
 
 ## Database and migration rules
 
@@ -149,7 +131,7 @@ Every domain feature requires:
 
 Bug fixes must include a regression test.
 
-Do not use real network services in unit tests. Use deterministic fakes for clock, IDs, RNG, email, queues, AI providers, and external storage.
+Do not use real network services in unit tests. Use deterministic fakes for clock, IDs, RNG, email, queues, and external storage.
 
 ## Git discipline
 
