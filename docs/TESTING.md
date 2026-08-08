@@ -103,7 +103,7 @@ Critical journeys:
 - save size/revision growth;
 - load and concurrency conflicts;
 - queue backlog/recovery;
-- provider timeout/circuit breaker;
+- dependency timeout, retry, and circuit-breaker behavior where applicable;
 - database restart and restore;
 - low-bandwidth frontend.
 
@@ -122,7 +122,7 @@ Deterministic fakes support:
 - database serialization conflicts;
 - queue retries;
 - object-storage failure;
-- AI timeout, malformed output, unsafe output, and outage.
+- authored-template failure, missing localization, malformed content, and dependency outage.
 
 ## Test data
 
