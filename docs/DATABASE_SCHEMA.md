@@ -178,19 +178,9 @@ Content source remains in Git; compiled artifacts are immutable.
 - outcome;
 - created_at.
 
-## AI presentation
+## Authored narrative presentation
 
-### NarrativeRenderCache
-
-- cache_key;
-- provider/model profile;
-- template version;
-- grounded input hash;
-- validated output;
-- safety classification;
-- created_at, expires_at.
-
-Do not store secrets or unnecessary raw prompts. Cache is noncanonical and safely disposable.
+Narrative templates and localized text are part of immutable compiled content artifacts. Optional rendered-scene caches store only artifact version, template ID, canonical input hash, locale, validated rendered text, and expiry. These caches are noncanonical and safely disposable.
 
 ## Operations
 
