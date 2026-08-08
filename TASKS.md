@@ -320,3 +320,168 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 ## Global completion gate
 
 No master task is complete unless tests, security, accessibility, observability, migrations, documentation, and task-specific acceptance evidence are included.
+
+
+# Full-Game Expansion Backlog
+
+The following tasks continue after the initial release-candidate foundation. Their detailed decomposition must preserve completed MVP behavior and save compatibility.
+
+## Phase 8 — Full narrative and world production
+
+### [ ] M033 — Canonical timeline, mysteries, and continuity registry
+
+- define world chronology and campaign clocks;
+- map every major mystery, clue, interpretation, and reveal window;
+- register promises, debts, witnesses, lies, and delayed consequences;
+- create automated continuity and spoiler checks.
+
+### [ ] M034 — Complete character and companion Bible
+
+- define all eight core companion arcs through Acts I–V;
+- add antagonists, faction leaders, replacement routes, voices, knowledge, boundaries, and endings;
+- validate independent decisions rather than loyalty-only outcomes.
+
+### [ ] M035 — World gazetteer and culture packages
+
+- document every full-release region, settlement, culture, law, naming pattern, calendar, funeral practice, and travel connection;
+- add location content schemas and discovery layers.
+
+### [ ] M036 — Full bestiary, items, and relic catalog
+
+- create region-specific living and undead entities;
+- define major relic histories, transformations, owners, and mechanics;
+- add codex discovery and encounter fixtures.
+
+## Phase 9 — Advanced systems
+
+### [ ] M037 — Remaining necromancy disciplines
+
+Implement Fleshweaving, Bone Sorcery, and Pale Covenant with complete graphs, cross-discipline interactions, transformations, teachers, narrative consequences, and balance simulations.
+
+### [ ] M038 — Advanced undead lifecycle and society
+
+- citizenship, reproduction/creation, work, contracts, memory inheritance, final death, crime, and dispute resolution;
+- named-undead long-term growth and independent goals.
+
+### [ ] M039 — Army and formation engine
+
+- units, captains, doctrine, commands, logistics, casualties, autonomy, and strategic resolution;
+- integrate decisive tactical scenes and simulation tooling.
+
+### [ ] M040 — Territory and governance engine
+
+- territory needs, laws, delegates, legitimacy, crises, diplomacy, succession, and rebellion;
+- keep strategy text-first and explainable.
+
+### [ ] M041 — Advanced crafting, ritual, and relic systems
+
+- stations, substitutions, interruptions, signatures, provenance, automation, and unique relic transformations.
+
+### [ ] M042 — Full economy and logistics
+
+- regional markets, territory production/needs, favors/debts, burial rights, war supply, balance reports, and no-grind completion paths.
+
+## Phase 10 — Act II
+
+### [ ] M043 — Act II content foundation
+
+Implement Hollow Reaches locations, political systems, claimant content, undead citizenship, and required assets.
+
+### [ ] M044 — Act II main and companion quests
+
+Author, validate, test, and integrate the complete Kingdom Without Breath campaign.
+
+### [ ] M045 — Act II release gate
+
+Complete continuity, balance, accessibility, security, migration, performance, and multi-route regression. Preserve every supported Act I outcome.
+
+## Phase 11 — Act III
+
+### [ ] M046 — Act III strategic foundation
+
+Implement Ashen Empire regions, army/territory integration, command-network conflict, and civilian economy consequences.
+
+### [ ] M047 — Act III campaign content
+
+Author the Ashen Engine campaign, companion fractures, war routes, replacement content, and all persistent outcomes.
+
+### [ ] M048 — Act III release gate
+
+Validate strategic balance, casualties, territory failure/continuation, save growth, migrations, accessibility, and representative campaign replays.
+
+## Phase 12 — Act IV
+
+### [ ] M049 — Metaphysical endgame engine
+
+Implement Gate realms, identity configuration, divine institutions, world fracture, covenant knowledge, and high-tier skill interactions.
+
+### [ ] M050 — Act IV campaign content
+
+Author The Hunger of Heaven with Church outcomes, Vael/Second Voice resolution, companion culminations, and public-truth consequences.
+
+### [ ] M051 — Act IV release gate
+
+Validate lore continuity, identity-state combinations, supported prior governments, performance, accessibility, and migration compatibility.
+
+## Phase 13 — Act V and endings
+
+### [ ] M052 — Covenant construction engine
+
+- clause eligibility, compatibility, enforcement, amendment, cost, faction claims, and crisis resolution;
+- explain safe failures without leaking unsupported endings.
+
+### [ ] M053 — Final campaign and confrontation variants
+
+Author the final assembly, strategic conflict, opposition variants, companion decisions, Last Choice, and recovery checkpoints.
+
+### [ ] M054 — Epilogue composition engine
+
+Implement authored epilogue modules, precedence, contradiction validation, Chronicle explanations, and long-term variants.
+
+### [ ] M055 — New Game Plus and Chronicle
+
+Implement account-level unlocks, campaign Echoes, origin variants, challenge settings, provenance, export/import, and compatibility.
+
+### [ ] M056 — Complete campaign balance and continuity
+
+Run headless campaigns across representative builds, factions, companions, deaths, territories, and covenant families. Eliminate unreachable endings and false choices.
+
+## Phase 14 — Full release production
+
+### [ ] M057 — Complete UX, art, audio, and localization pipeline
+
+Finalize screen specifications, design system, accessibility, audio/music, art direction, localization tooling, and content-warning variants.
+
+### [ ] M058 — Content authoring and QA tool suite
+
+Deliver quest/dialogue/skill/encounter editors, graph validation, continuity reports, scenario runner, content diff, and release packaging.
+
+### [ ] M059 — Full-game production readiness
+
+Complete Docker production deployment, migrations, backups, restore, incident response, load/security/accessibility audits, support tools, store/legal materials, and release rehearsal.
+
+### [ ] M060 — Version 1.0 release
+
+Ship the complete five-act campaign only after all global completion gates, supported save migrations, representative ending replays, operational checks, and release sign-off pass.
+
+## Phase 15 — Post-launch and expansion lifecycle
+
+### [ ] M061 — Patch and save-compatibility program
+
+Define and operate versioning, hotfixes, migrations, rollback/roll-forward, deprecation, and player communication.
+
+### [ ] M062 — Privacy-safe player feedback and balancing
+
+Collect explicit, minimal telemetry and structured feedback; publish balance-change principles and protect narrative privacy.
+
+### [ ] M063 — Expansion content architecture
+
+Support new regions, campaigns, disciplines, companions, relics, and ending interactions through versioned content packages without executable user scripts.
+
+### [ ] M064 — First expansion production
+
+Select scope only after 1.0 evidence. Require its own product requirements, narrative plan, system impact, migrations, test matrix, and release gate.
+
+### [ ] M065 — Long-term archival and end-of-life readiness
+
+Document offline/export options, final server behavior, source/content preservation, player data deletion, and communication well before any service closure.
