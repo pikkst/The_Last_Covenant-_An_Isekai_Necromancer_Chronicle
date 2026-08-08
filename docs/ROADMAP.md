@@ -90,19 +90,20 @@ Deliverable:
 
 Exit: internal players complete Act I using multiple builds without blocked progress or save corruption.
 
-## Milestone 6 — Optional narrative AI
+## Milestone 6 — Dockerized backend runtime
 
 Task: M028.
 
 Deliverable:
 
-- deterministic template renderer;
-- local model adapter;
-- optional cloud adapter;
-- consent, safety, budgets, cache, and fallback;
-- evaluation suite.
+- multi-stage API and worker images;
+- complete Docker Compose backend topology;
+- database migration and development seed jobs;
+- container health checks and graceful shutdown;
+- documented one-command local backend startup;
+- production-ready OCI container configuration.
 
-Exit: AI improves eligible prose while canonical replay hashes remain identical with AI disabled.
+Exit: a fresh clone starts the complete backend through Docker Compose and passes health, migration, persistence, restart, and shutdown verification.
 
 ## Milestone 7 — Beta and production readiness
 
