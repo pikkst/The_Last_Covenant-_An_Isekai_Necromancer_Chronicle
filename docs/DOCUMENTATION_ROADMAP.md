@@ -192,3 +192,19 @@ This file tracks the documentation required from foundation through full release
 - Do not mark a document complete while it contains unresolved placeholders that affect implementation.
 - Story spoilers belong under clearly named story/world paths.
 - Content data schemas remain authoritative over illustrative snippets.
+
+
+## Signature systems added
+
+- [x] identity and memory system
+- [x] promises and covenants
+- [x] knowledge and truth provenance
+- [x] dynamic legends and regional public identity
+- [x] emergent behavior-driven archetypes
+- [x] game-time clock and autonomous faction plans
+- [x] evolving player Sanctuary
+- [x] rival necromancers
+- [x] companion relationship network
+- [x] playable after-death state
+
+Implementation is tracked by M066–M075 in `TASKS.md`.
