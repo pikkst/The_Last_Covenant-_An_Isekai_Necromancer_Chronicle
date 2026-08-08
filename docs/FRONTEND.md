@@ -30,7 +30,7 @@ Dependency versions are selected and locked during M001.
 - `/play/[saveId]/map`;
 - `/play/[saveId]/inventory`;
 - `/play/[saveId]/companions`;
-- `/settings`: accessibility, privacy, AI, and account controls.
+- `/settings`: accessibility, privacy, gameplay, and account controls.
 
 Modal state should not replace navigable routes for major surfaces.
 
