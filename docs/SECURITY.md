@@ -12,7 +12,7 @@ Untrusted:
 - all request input and headers;
 - imported save files;
 - authored content before compilation;
-- AI prompts and outputs;
+- imported and authored content before validation;
 - external providers;
 - queue payloads crossing version boundaries;
 - logs or diagnostic fields originating from users.
@@ -70,7 +70,7 @@ Trusted only after validation/authorization:
 - no generated raw HTML;
 - schema and length validation;
 - safe URL and asset allow-lists;
-- test player names, imported content, and AI output.
+- test player names, imported content, and authored markup.
 
 ### CSRF
 
@@ -87,9 +87,9 @@ If cookie authentication is used, require SameSite policy plus CSRF token/origin
 - quarantine before canonical import;
 - owner-only expiring export links.
 
-### Prompt injection and AI leakage
+### Narrative content injection
 
-Controls in `AI_INTEGRATION.md`: no tools, minimal allow-listed facts, strict output schema, provider consent, safe fallback, and no hidden-state exposure.
+All runtime prose comes from compiled repository-owned content. Render only text or narrowly approved markup, validate interpolation values, and never execute content as code. No LLM or cloud AI endpoint is part of the threat surface.
 
 ### Denial of service
 
@@ -98,7 +98,7 @@ Controls in `AI_INTEGRATION.md`: no tools, minimal allow-listed facts, strict ou
 - database timeouts;
 - bounded graph traversal;
 - queue quotas and concurrency;
-- export/AI job quotas;
+- export/import and expensive job quotas;
 - pagination;
 - circuit breakers;
 - protection at edge/load balancer.
@@ -147,7 +147,7 @@ Never log:
 - tokens/cookies/API keys;
 - full request bodies;
 - full saves/exports;
-- raw cloud AI prompts/responses;
+- complete private save or imported content payloads;
 - sensitive imported data.
 
 Audit authentication, recovery, session revocation, account deletion, export/import, restore, administrative access, content activation, and backup restore.
