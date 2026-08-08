@@ -14,7 +14,7 @@ Create a highly replayable single-player RPG with:
 - named undead companions with memories, needs, and agency;
 - tactical text-based combat;
 - multiple moral philosophies of necromancy;
-- deterministic game rules with optional AI-assisted prose;
+- deterministic game rules and fully authored narrative prose;
 - a content pipeline that supports years of expansion.
 
 ## Core design pillars
@@ -24,7 +24,7 @@ Create a highly replayable single-player RPG with:
 3. **Choices create state, not just endings.** Settlements, factions, rumors, companions, and future quests remember what happened.
 4. **No universally correct morality.** Mercy, consent, survival, freedom, and duty regularly conflict.
 5. **Text is the feature.** Strong prose, readable information hierarchy, atmosphere, accessibility, and fast decisions are central.
-6. **Rules remain deterministic.** AI may enrich presentation but never owns canonical state or resolves mechanics.
+6. **Rules remain deterministic.** Authored content and server-side rules fully determine presentation options, state, and outcomes.
 
 ## Planned technology
 
@@ -34,9 +34,8 @@ Create a highly replayable single-player RPG with:
 - Jobs: BullMQ
 - Validation: Zod at content and client boundaries
 - Testing: Vitest/Jest, Playwright, contract tests, deterministic simulation tests
-- Runtime: Docker Compose for local development; container-based production
+- Runtime: Docker Compose for the complete backend in local development and container-based production
 - Observability: structured logs, OpenTelemetry, Prometheus-compatible metrics
-- Optional narrative AI: provider-neutral adapter with local-LLM and cloud implementations
 
 The exact dependency versions will be chosen during implementation and locked through the package manager.
 
@@ -55,7 +54,6 @@ The exact dependency versions will be chosen during implementation and locked th
 | [docs/BACKEND.md](docs/BACKEND.md) | Service boundaries, game engine, jobs, saves, and APIs |
 | [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | Persistence model and data ownership |
 | [docs/API_SPECIFICATION.md](docs/API_SPECIFICATION.md) | HTTP contracts, commands, errors, and idempotency |
-| [docs/AI_INTEGRATION.md](docs/AI_INTEGRATION.md) | Safe optional LLM architecture and local-model support |
 | [docs/SECURITY.md](docs/SECURITY.md) | Threat model and security requirements |
 | [docs/TESTING.md](docs/TESTING.md) | Test pyramid and deterministic verification |
 | [docs/DEVOPS.md](docs/DEVOPS.md) | Environments, containers, CI/CD, backups, and observability |
@@ -76,7 +74,7 @@ The first releasable vertical slice should provide:
 - autosave, manual save, export, import, and recovery;
 - keyboard-first responsive UI;
 - deterministic content and simulation tooling;
-- optional AI prose disabled by default.
+- fully authored narrative prose with deterministic template selection.
 
 ## Architecture principles
 
@@ -87,7 +85,7 @@ The first releasable vertical slice should provide:
 - Randomness is seeded and reproducible.
 - Quest logic uses explicit conditions and effects, never arbitrary code embedded in content.
 - UI rendering is separate from rules evaluation.
-- AI output is untrusted presentation data.
+- Narrative presentation is rendered only from versioned, repository-owned content and canonical events.
 - Accessibility and low-bandwidth play are release requirements.
 
 ## Local development target
@@ -115,7 +113,7 @@ Expected commands after the foundation milestone:
 ```bash
 corepack enable
 pnpm install
-docker compose up -d postgres redis
+docker compose up -d --build
 pnpm db:migrate
 pnpm dev
 pnpm test
