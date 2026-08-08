@@ -59,6 +59,10 @@ The exact dependency versions will be chosen during implementation and locked th
 | [docs/DEVOPS.md](docs/DEVOPS.md) | Environments, containers, CI/CD, backups, and observability |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Milestones from foundation to release |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Initial architecture decision records |
+| [docs/DOCUMENTATION_ROADMAP.md](docs/DOCUMENTATION_ROADMAP.md) | Complete documentation inventory through post-launch |
+| [docs/story/](docs/story/) | Acts II–V, endings, New Game Plus, and full campaign outline |
+| [docs/world/](docs/world/) | World, metaphysics, magic, religions, factions, and creatures |
+| [docs/systems/](docs/systems/) | Combat, necromancy, undead, armies, governance, crafting, and economy |
 
 ## Target MVP
 
@@ -139,3 +143,18 @@ A feature is complete only when:
 ## Licensing and content ownership
 
 No license is granted until a `LICENSE` file is intentionally added. All original setting, characters, prose, mechanics documentation, and code remain under the repository owner's copyright. Do not add third-party assets, text, music, models, or datasets without compatible licensing and attribution records.
+
+
+## Full-game direction
+
+The MVP is Act I, not the end of the product plan. The full campaign continues through:
+
+1. **Act I — The Dead of Dunmire:** identity, first resurrection, and the local covenant.
+2. **Act II — The Kingdom Without Breath:** undead personhood and the Hollow Court.
+3. **Act III — The Ashen Engine:** industrial necromancy, armies, and territory.
+4. **Act IV — The Hunger of Heaven:** gods, the Gate, and protagonist/Vael identity.
+5. **Act V — The Last Covenant:** construct and enforce a new order of death.
+
+See the [complete campaign outline](docs/story/MASTER_STORY_OUTLINE.md) and [documentation roadmap](docs/DOCUMENTATION_ROADMAP.md).
+
+Full release is planned as a 40–70 hour first campaign with six disciplines, eight core companions, 8–12 major regions, approximately 150–220 substantial quests, and state-driven ending families. These are production targets subject to validation, not promises of uncontrolled scope.
