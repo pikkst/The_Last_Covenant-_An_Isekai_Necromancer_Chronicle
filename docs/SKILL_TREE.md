@@ -19,7 +19,7 @@ Each skill node contains:
 - behavior/history requirements;
 - irreversible flag;
 - corruption/humanity/world effects;
-- tags used by dialogue, combat, quests, and AI grounding;
+- tags used by dialogue, combat, quests, deterministic rules, and authored presentation;
 - deterministic effect list.
 
 The server evaluates unlocks. The client receives an explainable projection that omits intentionally hidden requirements.
