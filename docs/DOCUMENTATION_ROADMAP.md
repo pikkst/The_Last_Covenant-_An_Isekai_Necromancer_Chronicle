@@ -208,3 +208,14 @@ This file tracks the documentation required from foundation through full release
 - [x] playable after-death state
 
 Implementation is tracked by M066–M075 in `TASKS.md`.
+
+
+## Summon customization added
+
+- [x] persistent summon progression and individual skill trees
+- [x] summon armor, weapons, rings, relics, anchors, and loadouts
+- [x] summon behavior customization and autonomy
+- [x] summon fusion and vessel evolution
+- [x] equipment/fusion identity, consent, and duplication rules
+
+Implementation is tracked by M076–M083 in `TASKS.md`.
