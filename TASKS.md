@@ -192,7 +192,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - participants, zones, range, cover, intent, initiative, resources, and statuses;
 - actions, reactions, rituals, retreat, surrender, negotiation, and environment;
 - seeded outcome resolution and battle log;
-- enemy AI as deterministic policies;
+- enemy behavior as deterministic policies;
 - snapshot/replay and anti-cheat validation.
 
 ### [ ] M021 — Death, vessels, and continuity
@@ -259,14 +259,15 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - unreachable content and dead-end detection;
 - golden campaign replays.
 
-### [ ] M028 — Optional AI narrative adapter
+### [ ] M028 — Dockerized backend runtime
 
-- provider-neutral interface;
-- deterministic fallback renderer;
-- local LLM adapter first, optional cloud adapter;
-- strict schema, grounding, filtering, timeout, budget, cache, and circuit breaker;
-- consent and privacy controls;
-- prove identical canonical results with AI on and off.
+- containerize the API and worker with multi-stage, non-root images;
+- run API, worker, PostgreSQL, and Redis through Docker Compose;
+- add health checks, dependency readiness, and graceful shutdown;
+- use named volumes for development persistence;
+- validate environment variables at startup;
+- add migration and seed containers/jobs;
+- prove a fresh clone can build and start the complete backend with one documented Docker Compose command.
 
 ## Phase 7 — Production readiness
 
@@ -275,7 +276,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - threat-model review;
 - dependency and secret scanning;
 - authorization matrix tests;
-- command replay, import bomb, prompt injection, XSS, CSRF, and rate-limit tests;
+- command replay, import bomb, content injection, XSS, CSRF, and rate-limit tests;
 - retention and account deletion;
 - incident runbook.
 
