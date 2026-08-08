@@ -485,3 +485,65 @@ Select scope only after 1.0 evidence. Require its own product requirements, narr
 ### [ ] M065 — Long-term archival and end-of-life readiness
 
 Document offline/export options, final server behavior, source/content preservation, player data deletion, and communication well before any service closure.
+
+
+## Phase 16 — Signature identity and living-world systems
+
+### [ ] M066 — Identity and memory engine
+
+- implement Earthborn, Vael, and Becoming identity state;
+- add memory provenance, confidence, copying, alteration, loss, restoration, and sacrifice;
+- integrate vessels, skills, relationships, Codex, endings, and New Game Plus;
+- prevent hidden provenance from leaking to clients;
+- add deterministic identity-combination and migration tests.
+
+### [ ] M067 — Promise and covenant ledger
+
+- implement persistent obligations, wording, intent, witnesses, scope, deadlines, amendments, conflicts, fulfillment, breach, and enforcement;
+- integrate companions, factions, undead autonomy, rituals, governance, legends, and final covenant eligibility;
+- expose safe known-conflict explanations.
+
+### [ ] M068 — Knowledge, truth, and rumor provenance
+
+- separate canonical facts from character knowledge;
+- implement sources, confidence, contradictions, lies, investigations, NPC knowledge, and Codex history;
+- add deterministic rumor propagation and spoiler-leak security tests.
+
+### [ ] M069 — Dynamic legends and public identity
+
+- derive regional/faction interpretations from witnessed outcomes and methods;
+- implement spread, propaganda, contradiction, adoption/rejection, identity transfer, and gameplay consequences;
+- add epilogue integration.
+
+### [ ] M070 — Emergent archetype engine
+
+- recognize behavior patterns without a selectable morality class;
+- implement evidence, stages, conflicts, acceptance/rejection, skill/teacher/rival hooks, and ending effects;
+- prove no archetype is mandatory for campaign completion.
+
+### [ ] M071 — World clock and autonomous faction plans
+
+- implement game-time advancement, scheduled events, faction goals, observable preparation, cancellation, replacement, and deterministic conflict ordering;
+- ensure logout and real-world absence never advance the campaign;
+- add fair deadline warnings and resume summaries.
+
+### [ ] M072 — Player Sanctuary
+
+- implement Sanctuary forms, facilities, inhabitants, policies, petitions, delegation, attacks, evacuation, relocation, and transformation into territory governance;
+- preserve named-character continuity and avoid repetitive maintenance.
+
+### [ ] M073 — Rival necromancer framework
+
+- implement authored rival models, knowledge boundaries, plans, adaptation flags, counterplay, former-vessel eligibility, escalation, and multiple resolutions;
+- ensure rivals never learn hidden player state.
+
+### [ ] M074 — Companion relationship network
+
+- implement bounded companion-to-companion relationship edges, group scenes, secret agreements, ideological blocs, independent actions, departures, inheritance, and endgame decisions;
+- avoid a full unbounded NPC graph.
+
+### [ ] M075 — Playable after-death state
+
+- implement disembodied perception, stability, anchors, rescue, vessel compatibility, memory costs, pacts, final passage, successor outcomes, and recovery checkpoints;
+- protect against duplication and checkpoint exploits;
+- test every supported death configuration.
