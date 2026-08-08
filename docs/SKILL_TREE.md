@@ -223,3 +223,23 @@ Content compiler rejects:
 - effects not supported by the domain engine.
 
 Automated simulation must prove multiple viable MVP builds through Act I.
+
+
+## Summon skill trees
+
+The protagonist skill graph and summon skill graphs are separate but connected.
+
+Each persistent summon may access:
+
+- universal undead foundation nodes;
+- vessel-specific branches;
+- role mastery;
+- identity and memory nodes;
+- equipment-granted techniques;
+- covenant/relationship skills;
+- fusion and evolution nodes;
+- story/title-specific unique skills.
+
+Protagonist nodes may unlock training methods, command capacity, fusion rituals, equipment attunement, or new summon branches. They must not silently grant every summon the same skill.
+
+Summon unlocks are server validated using the summon’s vessel, identity, role, mastery, equipment, autonomy, covenant, memories, and history. Autonomous summons may reject a proposed irreversible transformation.
