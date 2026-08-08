@@ -36,9 +36,9 @@ PostgreSQL stores accounts, saves, projections, events, command results, and out
 
 Canonical transitions execute in a pure game-engine package using injected time, IDs, and seeded randomness.
 
-**Why:** prevents cheating, enables replay/debugging, and keeps AI optional.
+**Why:** prevents cheating, enables replay/debugging, and keeps rules independent of presentation.
 
-**Consequence:** client and provider output cannot resolve mechanics.
+**Consequence:** client or infrastructure-service output cannot resolve mechanics.
 
 ## ADR-005 — Declarative compiled content
 
@@ -70,15 +70,15 @@ State projections, revision, domain events, and outbox messages commit together.
 
 **Consequence:** network calls never occur within a command transaction.
 
-## ADR-008 — AI is noncanonical and optional
+## ADR-008 — No LLM or generative AI dependency
 
 **Status:** Accepted.
 
-Use provider-neutral narrative rendering after canonical commit with deterministic fallback.
+All production narrative is human-authored, versioned, validated, and selected through deterministic rules. The game does not use local LLM modules, cloud LLM APIs, or other generative AI services.
 
-**Why:** protects game integrity, privacy choices, cost, availability, and local-LLM support.
+**Why:** preserves authored narrative quality, deterministic behavior, privacy, predictable operations, and zero model-service dependency.
 
-**Consequence:** AI-specific code stays in adapters and identical mechanics must be proven with AI off.
+**Consequence:** do not add model SDKs, endpoints, prompt pipelines, or generated runtime prose. Narrative scale comes from content tooling, templates, localization, and reusable deterministic systems.
 
 ## ADR-009 — Next.js frontend and NestJS API target
 
@@ -123,3 +123,14 @@ When a material decision is made:
 3. do not silently reverse accepted decisions;
 4. mark old records Superseded and reference the replacement;
 5. keep decisions concise and evidence-based.
+
+
+## ADR-013 — Docker-first backend
+
+**Status:** Accepted.
+
+The API and worker run as OCI containers. Docker Compose is the supported local backend environment and coordinates the API, worker, PostgreSQL, Redis, migrations, and optional observability.
+
+**Why:** provides reproducible setup, dependency isolation, production parity, and simpler onboarding.
+
+**Consequence:** backend features must include container health, graceful shutdown, validated runtime configuration, non-root images, and Compose verification. Host-only behavior is not an accepted implementation.
