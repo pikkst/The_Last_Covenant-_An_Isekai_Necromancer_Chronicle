@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
-    "start": "node dist/main",
+    "start": "node dist/main.js",
+    "smoke": "pnpm build && node scripts/smoke.js",
     "lint": "eslint \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -28,6 +29,7 @@
     "bcrypt": "^5.1.0",
     "zod": "^3.23.0",
     "ioredis": "^5.3.0",
+    "dotenv": "^16.4.0",
     "@tlc/contracts": "workspace:*",
     "@tlc/observability": "workspace:*"
   },

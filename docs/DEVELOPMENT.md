@@ -13,22 +13,29 @@
    pnpm install
    ```
 
-2. Start dependencies:
+2. Copy environment files:
+   ```bash
+   cp apps/api/.env.example apps/api/.env
+   cp apps/worker/.env.example apps/worker/.env
+   cp .env.example .env
+   ```
+
+3. Start dependencies:
    ```bash
    docker compose up -d
    ```
 
-3. Run migrations (after M004):
+4. Run migrations (after M004):
    ```bash
    pnpm db:migrate
    ```
 
-4. Start all apps:
+5. Start all apps:
    ```bash
    pnpm dev
    ```
 
-5. Run checks:
+6. Run checks:
    ```bash
    pnpm lint
    pnpm typecheck

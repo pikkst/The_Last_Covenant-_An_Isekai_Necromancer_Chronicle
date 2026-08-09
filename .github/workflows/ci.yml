@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 9.12.0
@@ -21,12 +23,19 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm commitlint --from=origin/${{ github.base_ref }} --to=HEAD
+      - run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            pnpm commitlint --from=origin/${{ github.base_ref }} --to=HEAD
+          else
+            pnpm commitlint --last
+          fi
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 9.12.0
@@ -41,6 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 9.12.0
@@ -49,4 +60,6 @@ jobs:
           node-version: 20.x
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+      - run: cp apps/api/.env.example apps/api/.env
       - run: pnpm build
+      - run: pnpm --filter @tlc/api run smoke
