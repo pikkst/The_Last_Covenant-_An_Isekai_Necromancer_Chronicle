@@ -26,21 +26,13 @@ jobs:
       - run: pnpm typecheck
       - run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            NEW_COMMITS=$(git log --reverse --oneline origin/main..HEAD --format="%H")
-            if [ -n "$NEW_COMMITS" ]; then
-              FIRST=$(echo "$NEW_COMMITS" | head -n1)
-              LAST=$(echo "$NEW_COMMITS" | tail -n1)
-              pnpm commitlint --from=$FIRST --to=$LAST
-            fi
+            FROM=$(git merge-base origin/main HEAD)
+            pnpm commitlint --from=$FROM --to=HEAD
           else
             BEFORE="${{ github.event.before }}"
             if [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
-              NEW_COMMITS=$(git log --reverse --oneline origin/main..HEAD --format="%H")
-              if [ -n "$NEW_COMMITS" ]; then
-                FIRST=$(echo "$NEW_COMMITS" | head -n1)
-                LAST=$(echo "$NEW_COMMITS" | tail -n1)
-                pnpm commitlint --from=$FIRST --to=$LAST
-              fi
+              FROM=$(git merge-base origin/main HEAD)
+              pnpm commitlint --from=$FROM --to=HEAD
             else
               pnpm commitlint --from=$BEFORE --to=HEAD
             fi
