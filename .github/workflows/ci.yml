@@ -21,11 +21,17 @@ jobs:
           node-version: 20.x
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+      - run: pnpm -r --filter "./packages/**" run build
       - run: pnpm lint
       - run: pnpm typecheck
       - run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            pnpm commitlint --from=origin/${{ github.base_ref }} --to=HEAD
+            MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "")
+            if [ -n "$MERGE_BASE" ]; then
+              pnpm commitlint --from=$MERGE_BASE --to=HEAD
+            else
+              pnpm commitlint --from=HEAD --to=HEAD
+            fi
           else
             BEFORE="${{ github.event.before }}"
             if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then

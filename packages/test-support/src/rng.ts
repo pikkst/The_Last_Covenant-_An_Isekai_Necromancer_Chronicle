@@ -1,7 +1,11 @@
-export function createSeededRng(seed: number) {
-  let s = seed;
-  return () => {
-    s = (s * 1664525 + 1013904223) & 0xffffffff;
-    return (s >>> 0) / 0xffffffff;
+import { Rng } from '@tlc/contracts';
+
+export function createSeededRng(seed: number): Rng {
+  let s = seed >>> 0;
+  return {
+    next: (): number => {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    },
   };
 }

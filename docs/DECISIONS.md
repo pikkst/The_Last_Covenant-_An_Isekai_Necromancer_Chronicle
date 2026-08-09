@@ -134,3 +134,13 @@ The API and worker run as OCI containers. Docker Compose is the supported local 
 **Why:** provides reproducible setup, dependency isolation, production parity, and simpler onboarding.
 
 **Consequence:** backend features must include container health, graceful shutdown, validated runtime configuration, non-root images, and Compose verification. Host-only behavior is not an accepted implementation.
+
+## ADR-014 — Contract-first deterministic primitives
+
+**Status:** Accepted.
+
+Shared contracts define branded identifiers, UTC timestamps, semantic versions, pagination, result, and error types in `@tlc/contracts`. Injectable `Clock`, `IdGenerator`, and `Rng` interfaces live in contracts; real implementations live in `@tlc/game-engine`; deterministic fakes and replay fixtures live in `@tlc/test-support`.
+
+**Why:** compile-time branding prevents primitive drift across package boundaries, and injecting time/IDs/randomness keeps domain logic pure and replayable.
+
+**Consequence:** framework/SDK types must not leak into domain packages; all content hashing uses stable serialization plus a deterministic hash; tests use seeded RNG and fake clocks rather than wall-clock time or `Math.random`.

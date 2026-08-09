@@ -1,17 +1,7 @@
-export interface Clock {
-  now(): Date;
-}
+import { Clock, UtcTimestamp } from '@tlc/contracts';
 
 export class SystemClock implements Clock {
-  now(): Date {
-    return new Date();
-  }
-}
-
-export class FakeClock implements Clock {
-  constructor(private fixed: Date) {}
-
-  now(): Date {
-    return this.fixed;
+  now(): UtcTimestamp {
+    return new Date() as UtcTimestamp;
   }
 }
