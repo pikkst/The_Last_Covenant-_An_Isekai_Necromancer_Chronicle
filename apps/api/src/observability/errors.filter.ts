@@ -31,7 +31,7 @@ export class AppErrorFilter implements ExceptionFilter {
     const body: ApiErrorResponse = {
       error: {
         code: exception.code,
-        message: exception.message,
+        message: status >= 500 ? 'Internal server error' : exception.message,
         ...(traceId ? { traceId } : {}),
       },
     };
