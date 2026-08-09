@@ -32,7 +32,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - add deterministic test builders and replay fixtures;
 - prevent framework/SDK types from leaking into domain packages.
 
-### [ ] M003 — Observability and error foundation
+### [x] M003 — Observability and error foundation
 
 **Outcome:** All services use structured, correlated, privacy-safe diagnostics.
 
