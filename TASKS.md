@@ -6,7 +6,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 
 ## Phase 0 — Product and engineering foundation
 
-### [ ] M001 — Repository and monorepo foundation
+### [~] M001 — Repository and monorepo foundation
 
 **Outcome:** A reproducible TypeScript monorepo boots locally and in CI.
 

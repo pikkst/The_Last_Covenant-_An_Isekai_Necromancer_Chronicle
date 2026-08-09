@@ -1,0 +1,14 @@
+node_modules
+.env*
+!.env.example
+.next
+dist
+build
+coverage
+.turbo
+.cache
+*.tsbuildinfo
+*.log
+.DS_Store
+.vscode
+.idea

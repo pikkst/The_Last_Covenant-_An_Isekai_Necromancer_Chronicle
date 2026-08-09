@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'phase-0/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            pnpm commitlint --from=origin/${{ github.base_ref }} --to=HEAD
+          else
+            BEFORE="${{ github.event.before }}"
+            if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "")
+              if [ -n "$MERGE_BASE" ]; then
+                pnpm commitlint --from=$MERGE_BASE --to=HEAD
+              else
+                pnpm commitlint --from=HEAD --to=HEAD
+              fi
+            else
+              pnpm commitlint --from=$BEFORE --to=HEAD
+            fi
+          fi
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: cp apps/api/.env.example apps/api/.env
+      - run: pnpm build
+      - run: pnpm --filter @tlc/api run smoke
