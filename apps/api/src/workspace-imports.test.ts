@@ -22,9 +22,9 @@ describe('workspace package boundary', () => {
   });
 
   it('creates trace context', () => {
-    const ctx = createTraceContext('trace-1', 'span-1');
-    expect(ctx.traceId).toBe('trace-1');
-    expect(ctx.spanId).toBe('span-1');
+    const ctx = createTraceContext('abcdef0123456789abcdef0123456789', 'abcdef0123456789');
+    expect(ctx.traceId).toBe('abcdef0123456789abcdef0123456789');
+    expect(ctx.spanId).toBe('abcdef0123456789');
   });
 
   it('imports logger from @tlc/observability', () => {

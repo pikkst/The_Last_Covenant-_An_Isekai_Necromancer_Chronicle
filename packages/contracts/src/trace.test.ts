@@ -17,14 +17,18 @@ describe('trace', () => {
     expect(validateTraceContext(ctx)).toBe(true);
   });
 
-  it('createTraceContext rejects invalid supplied trace ids', () => {
+  it('createTraceContext regenerates invalid supplied trace ids', () => {
     const ctx = createTraceContext('short', 'abcdef0123456789');
-    expect(validateTraceContext(ctx)).toBe(false);
+    expect(ctx.traceId).toHaveLength(32);
+    expect(ctx.spanId).toBe('abcdef0123456789');
+    expect(validateTraceContext(ctx)).toBe(true);
   });
 
-  it('createTraceContext rejects invalid supplied span ids', () => {
+  it('createTraceContext regenerates invalid supplied span ids', () => {
     const ctx = createTraceContext('abcdef0123456789abcdef0123456789', 'short');
-    expect(validateTraceContext(ctx)).toBe(false);
+    expect(ctx.traceId).toBe('abcdef0123456789abcdef0123456789');
+    expect(ctx.spanId).toHaveLength(16);
+    expect(validateTraceContext(ctx)).toBe(true);
   });
 
   it('createTraceContextCarrier honors sampled flag', () => {

@@ -19,8 +19,6 @@ export function getMemoryExporter(): { finishedSpans: unknown[] } | undefined {
 
 export function resetOpenTelemetry(): void {
   tracer = undefined;
-  sdkInitialized = false;
-  memoryExporter = undefined;
 }
 
 function createOpenTelemetryTracer(): Tracer {
@@ -30,8 +28,11 @@ function createOpenTelemetryTracer(): Tracer {
     const api = require('@opentelemetry/api');
     const apiTracer = api.trace.getTracer('@tlc/observability');
     const impl = {
-      startSpan: (name: string, attributes?: Record<string, unknown>): Span => {
-        const span = apiTracer.startSpan(name, attributes);
+      startSpan: (name: string, attributes?: Record<string, unknown>, traceContext?: TraceContext): Span => {
+        const parentContext = traceContext
+          ? buildRemoteParentContext(api, traceContext)
+          : undefined;
+        const span = apiTracer.startSpan(name, attributes ?? {}, parentContext);
         return new OpenTelemetrySpan(span);
       },
       withSpan: async (name: string, attributes: Record<string, unknown>, traceContext: TraceContext, fn: (span: Span) => Promise<unknown>) => {
@@ -49,17 +50,41 @@ function createOpenTelemetryTracer(): Tracer {
   }
 }
 
+function buildRemoteParentContext(api: unknown, traceContext: TraceContext): unknown {
+  const traceApi = api as typeof import('@opentelemetry/api');
+  const remoteSpan = {
+    spanContext() {
+      return {
+        traceId: traceContext.traceId,
+        spanId: traceContext.spanId,
+        traceFlags: traceContext.sampled ? traceApi.TraceFlags.SAMPLED : traceApi.TraceFlags.NONE,
+        isRemote: true,
+      };
+    },
+    setAttribute(): void {},
+    setAttributes(): void {},
+    addEvent(): void {},
+    addLink(): void {},
+    setStatus(): void {},
+    updateName(): void {},
+    end(): void {},
+    isRecording(): boolean {
+      return false;
+    },
+  } as any;
+  return traceApi.trace.setSpan(traceApi.ROOT_CONTEXT, remoteSpan);
+}
+
 function initializeOpenTelemetry(): void {
   if (sdkInitialized) return;
   sdkInitialized = true;
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { NodeTracerProvider, ConsoleSpanExporter, SimpleSpanProcessor, NoopSpanExporter, InMemorySpanExporter } = require('@opentelemetry/sdk-trace-node') as {
+    const { NodeTracerProvider, ConsoleSpanExporter, SimpleSpanProcessor, InMemorySpanExporter } = require('@opentelemetry/sdk-trace-node') as {
       NodeTracerProvider: new (config: unknown) => { register: () => void; addSpanProcessor: (p: unknown) => void };
       ConsoleSpanExporter: new () => unknown;
       SimpleSpanProcessor: new (exporter: unknown) => unknown;
-      NoopSpanExporter: new () => unknown;
       InMemorySpanExporter: new () => { _finishedSpans: unknown[] };
     };
 
@@ -72,7 +97,10 @@ function initializeOpenTelemetry(): void {
       exporter = new InMemorySpanExporter();
       memoryExporter = { finishedSpans: (exporter as { _finishedSpans: unknown[] })._finishedSpans };
     } else {
-      exporter = new NoopSpanExporter();
+      exporter = {
+        export: () => {},
+        shutdown: async () => true,
+      };
     }
 
     const provider = new NodeTracerProvider({});

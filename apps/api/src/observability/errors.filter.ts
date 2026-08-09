@@ -16,12 +16,16 @@ export class AppErrorFilter implements ExceptionFilter {
     const status = httpStatusForCode(exception.code);
 
     const traceId = (request as Request & { traceContext?: { traceId?: string } }).traceContext?.traceId;
+    const spanId = (request as Request & { traceContext?: { spanId?: string } }).traceContext?.spanId;
 
     const level: LogLevel = status >= 500 ? 'error' : 'warn';
-    this.logger.log(level, exception.message, {
+    const logger = createStructuredLogger({
+      sink: createJsonConsoleSink(),
+      traceContext: traceId ? { traceId, spanId: spanId ?? '' } : undefined,
+    });
+    logger.log(level, exception.message, {
       code: exception.code,
       cause: exception.cause,
-      traceId,
     });
 
     const body: ApiErrorResponse = {
@@ -47,14 +51,18 @@ export class GenericExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const traceId = (request as Request & { traceContext?: { traceId?: string } }).traceContext?.traceId;
+    const spanId = (request as Request & { traceContext?: { spanId?: string } }).traceContext?.spanId;
     const message = exception.message ?? 'Internal server error';
     const code = isAppError(exception) ? exception.code : 'INTERNAL_ERROR';
     const status = isAppError(exception) ? httpStatusForCode(code) : exception instanceof HttpException ? exception.getStatus() : 500;
 
-    this.logger.log('error', message, {
+    const logger = createStructuredLogger({
+      sink: createJsonConsoleSink(),
+      traceContext: traceId ? { traceId, spanId: spanId ?? '' } : undefined,
+    });
+    logger.log('error', message, {
       code,
       stack: process.env.NODE_ENV === 'development' ? exception.stack : undefined,
-      traceId,
     });
 
     const body: ApiErrorResponse = {

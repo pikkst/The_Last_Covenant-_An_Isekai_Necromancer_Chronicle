@@ -5,9 +5,13 @@ export interface TraceContext {
 }
 
 export function createTraceContext(traceId?: string, spanId?: string): TraceContext {
+  const generatedTraceId = generateId(32);
+  const generatedSpanId = generateId(16);
+  const isValidTraceId = typeof traceId === 'string' && /^[0-9a-f]{32}$/.test(traceId);
+  const isValidSpanId = typeof spanId === 'string' && /^[0-9a-f]{16}$/.test(spanId);
   return {
-    traceId: traceId ?? generateId(32),
-    spanId: spanId ?? generateId(16),
+    traceId: isValidTraceId ? traceId : generatedTraceId,
+    spanId: isValidSpanId ? spanId : generatedSpanId,
     sampled: true,
   };
 }

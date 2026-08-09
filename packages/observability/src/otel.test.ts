@@ -4,6 +4,7 @@ import { getTracer, resetOpenTelemetry, getMemoryExporter } from './otel';
 describe('otel', () => {
   beforeEach(() => {
     resetOpenTelemetry();
+    process.env.OTEL_EXPORTER_TYPE = 'memory';
   });
 
   it('returns a tracer even when @opentelemetry/api is missing', async () => {
@@ -15,7 +16,6 @@ describe('otel', () => {
   });
 
   it('bootstraps SDK provider and configured exporter receives a span', async () => {
-    process.env.OTEL_EXPORTER_TYPE = 'memory';
     const tracer = getTracer();
     const span = tracer.startSpan('test-span', { 'test.key': 'value' });
     span.setAttribute('attr', 1);
