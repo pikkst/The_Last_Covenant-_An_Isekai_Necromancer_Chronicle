@@ -92,6 +92,22 @@ export function createStructuredLogger(options?: {
   return logger;
 }
 
+export function createJsonConsoleSink(): (entry: LogEntry) => void {
+  return (entry: LogEntry) => {
+    const line = JSON.stringify(entry);
+    switch (entry.level) {
+      case 'error':
+        console.error(line);
+        break;
+      case 'warn':
+        console.warn(line);
+        break;
+      default:
+        console.log(line);
+    }
+  };
+}
+
 export const noopLogger: Logger = {
   log: () => {},
   child: () => noopLogger,

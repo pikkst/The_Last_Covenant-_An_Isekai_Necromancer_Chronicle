@@ -1,23 +1,11 @@
-import { createStructuredLogger, getTracer } from '@tlc/observability';
+import { createStructuredLogger, createJsonConsoleSink, getTracer } from '@tlc/observability';
 
 const logger = createStructuredLogger({
-  sink: (entry) => {
-    const logEntry = { ...entry, level: entry.level.toUpperCase() };
-    switch (entry.level) {
-      case 'error':
-        console.error(logEntry);
-        break;
-      case 'warn':
-        console.warn(logEntry);
-        break;
-      default:
-        console.log(logEntry);
-    }
-  },
+  sink: createJsonConsoleSink(),
 });
 
 async function main() {
-  const tracer = await getTracer();
+  const tracer = getTracer();
   const span = tracer.startSpan('worker.start', { service: 'worker' });
   try {
     logger.log('info', 'Worker starting...');

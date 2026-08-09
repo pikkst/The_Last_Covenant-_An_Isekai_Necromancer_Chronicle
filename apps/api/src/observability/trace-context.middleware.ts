@@ -1,79 +1,74 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware, Inject } from '@nestjs/common';
 import type { Request, Response, NextFunction } from 'express';
 import { createTraceContext, type TraceContext } from '@tlc/contracts';
-import { createStructuredLogger, type Logger, type LogLevel } from '@tlc/observability';
+import { createStructuredLogger, createJsonConsoleSink, type Logger, type LogLevel, type Counter, type Histogram } from '@tlc/observability';
 import { getTracer } from '@tlc/observability';
-
-function generateId(length: number): string {
-  const bytes = new Uint8Array(length);
-  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-    crypto.getRandomValues(bytes);
-  } else {
-    for (let i = 0; i < length; i++) {
-      bytes[i] = (Math.random() * 256) | 0;
-    }
-  }
-  return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
+import { InMemoryMetrics } from '@tlc/observability';
 
 @Injectable()
 export class TraceContextMiddleware implements NestMiddleware {
   private readonly logger: Logger;
   private readonly tracer = getTracer();
+  private readonly requestCounter: Counter;
+  private readonly requestDuration: Histogram;
 
-  constructor() {
+  constructor(@Inject(InMemoryMetrics) metrics: InMemoryMetrics) {
     this.logger = createStructuredLogger({
-      sink: (entry) => this.writeLog(entry),
+      sink: createJsonConsoleSink(),
     });
+    this.requestCounter = metrics.counter('http_requests_total', 'HTTP request count', ['method', 'path', 'status']);
+    this.requestDuration = metrics.histogram('http_request_duration_seconds', 'HTTP request duration', undefined, ['method', 'path']);
   }
 
   use(req: Request, res: Response, next: NextFunction): void {
-    const traceId = (req.headers['x-request-id'] as string | undefined) ?? generateId(32);
-    const spanId = generateId(16);
-    const traceContext = createTraceContext(traceId, spanId);
+    const traceId = (req.headers['x-request-id'] as string | undefined) ?? undefined;
+    const traceContext = createTraceContext(traceId);
 
     (req as Request & { traceContext: TraceContext }).traceContext = traceContext;
-    res.setHeader('x-request-id', traceId);
+    res.setHeader('x-request-id', traceContext.traceId);
 
     const method = req.method;
-    const url = req.originalUrl || req.url;
+    const path = this.sanitizePath(req.originalUrl || req.url);
     const start = Date.now();
+    const requestLogger = this.logger.child({ traceId: traceContext.traceId, spanId: traceContext.spanId });
 
-    this.logger.log('info', 'request.start', { method, url });
+    const span = this.tracer.startSpan('request', { method, path }, traceContext);
+
+    requestLogger.log('info', 'request.start', { method, path });
 
     res.on('finish', () => {
       const durationMs = Date.now() - start;
-      const level: LogLevel = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
-      this.logger.log(level, 'request.finish', {
+      const durationSeconds = durationMs / 1000;
+      const statusCode = res.statusCode;
+      const level: LogLevel = statusCode >= 500 ? 'error' : statusCode >= 400 ? 'warn' : 'info';
+
+      requestLogger.log(level, 'request.finish', {
         method,
-        url,
-        statusCode: res.statusCode,
+        path,
+        statusCode,
         durationMs,
       });
+
+      this.requestCounter.increment(1, { method, path, status: String(statusCode) });
+      this.requestDuration.observe(durationSeconds, { method, path });
+
+      span.setAttribute('http.status_code', statusCode);
+      span.setAttribute('http.method', method);
+      span.setAttribute('http.route', path);
+      span.setAttribute('duration_ms', durationMs);
+      span.end();
     });
 
     next();
   }
 
-  private writeLog(entry: { level: LogLevel; message: string; timestamp: string; traceId?: string; spanId?: string; meta?: Record<string, unknown> }): void {
-    const logEntry = {
-      ...entry,
-      level: entry.level.toUpperCase(),
-    };
-    switch (entry.level) {
-      case 'error':
-        console.error(logEntry);
-        break;
-      case 'warn':
-        console.warn(logEntry);
-        break;
-      case 'debug':
-        console.debug(logEntry);
-        break;
-      default:
-        console.log(logEntry);
+  private sanitizePath(url: string): string {
+    try {
+      const sanitized = new URL(url, 'http://localhost');
+      sanitized.search = '';
+      return sanitized.pathname + sanitized.hash;
+    } catch {
+      return url.split('?')[0] || url;
     }
   }
 }

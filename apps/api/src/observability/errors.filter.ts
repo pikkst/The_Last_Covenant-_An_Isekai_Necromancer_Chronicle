@@ -1,24 +1,12 @@
 import { Catch, ArgumentsHost, ExceptionFilter, HttpException } from '@nestjs/common';
 import type { Response } from 'express';
 import { AppError, isAppError, httpStatusForCode, ApiErrorResponse } from '@tlc/contracts';
-import { createStructuredLogger, type LogLevel } from '@tlc/observability';
+import { createStructuredLogger, createJsonConsoleSink, type LogLevel } from '@tlc/observability';
 
 @Catch(AppError)
 export class AppErrorFilter implements ExceptionFilter {
   private readonly logger = createStructuredLogger({
-    sink: (entry) => {
-      const logEntry = { ...entry, level: entry.level.toUpperCase() };
-      switch (entry.level) {
-        case 'error':
-          console.error(logEntry);
-          break;
-        case 'warn':
-          console.warn(logEntry);
-          break;
-        default:
-          console.log(logEntry);
-      }
-    },
+    sink: createJsonConsoleSink(),
   });
 
   catch(exception: AppError, host: ArgumentsHost): void {
@@ -51,16 +39,7 @@ export class AppErrorFilter implements ExceptionFilter {
 @Catch()
 export class GenericExceptionFilter implements ExceptionFilter {
   private readonly logger = createStructuredLogger({
-    sink: (entry) => {
-      const logEntry = { ...entry, level: entry.level.toUpperCase() };
-      switch (entry.level) {
-        case 'error':
-          console.error(logEntry);
-          break;
-        default:
-          console.log(logEntry);
-      }
-    },
+    sink: createJsonConsoleSink(),
   });
 
   catch(exception: Error, host: ArgumentsHost): void {

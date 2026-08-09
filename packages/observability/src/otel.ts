@@ -3,6 +3,8 @@ import type { Span, Tracer } from './tracer';
 import { NoOpTracer } from './tracer';
 
 let tracer: Tracer | undefined;
+let sdkInitialized = false;
+let memoryExporter: { finishedSpans: unknown[] } | undefined;
 
 export function getTracer(): Tracer {
   if (!tracer) {
@@ -11,9 +13,20 @@ export function getTracer(): Tracer {
   return tracer;
 }
 
+export function getMemoryExporter(): { finishedSpans: unknown[] } | undefined {
+  return memoryExporter;
+}
+
+export function resetOpenTelemetry(): void {
+  tracer = undefined;
+  sdkInitialized = false;
+  memoryExporter = undefined;
+}
+
 function createOpenTelemetryTracer(): Tracer {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    initializeOpenTelemetry();
+    // @ts-ignore optional peer
     const api = require('@opentelemetry/api');
     const apiTracer = api.trace.getTracer('@tlc/observability');
     const impl = {
@@ -33,6 +46,41 @@ function createOpenTelemetryTracer(): Tracer {
     return impl;
   } catch {
     return new NoOpTracer();
+  }
+}
+
+function initializeOpenTelemetry(): void {
+  if (sdkInitialized) return;
+  sdkInitialized = true;
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { NodeTracerProvider, ConsoleSpanExporter, SimpleSpanProcessor, NoopSpanExporter, InMemorySpanExporter } = require('@opentelemetry/sdk-trace-node') as {
+      NodeTracerProvider: new (config: unknown) => { register: () => void; addSpanProcessor: (p: unknown) => void };
+      ConsoleSpanExporter: new () => unknown;
+      SimpleSpanProcessor: new (exporter: unknown) => unknown;
+      NoopSpanExporter: new () => unknown;
+      InMemorySpanExporter: new () => { _finishedSpans: unknown[] };
+    };
+
+    const exporterType = (process.env.OTEL_EXPORTER_TYPE || 'noop').toLowerCase();
+
+    let exporter: unknown;
+    if (exporterType === 'console') {
+      exporter = new ConsoleSpanExporter();
+    } else if (exporterType === 'memory') {
+      exporter = new InMemorySpanExporter();
+      memoryExporter = { finishedSpans: (exporter as { _finishedSpans: unknown[] })._finishedSpans };
+    } else {
+      exporter = new NoopSpanExporter();
+    }
+
+    const provider = new NodeTracerProvider({});
+
+    provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+    provider.register();
+  } catch {
+    // If SDK bootstrap fails, fall back to API no-op behavior
   }
 }
 

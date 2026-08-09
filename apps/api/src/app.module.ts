@@ -1,10 +1,11 @@
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { HealthController } from './health/health.controller';
 import { MetricsController } from './observability/metrics.controller';
+import { MetricsModule } from './observability/metrics.module';
 import { TraceContextMiddleware } from './observability/trace-context.middleware';
 
 @Module({
-  imports: [],
+  imports: [MetricsModule],
   controllers: [HealthController, MetricsController],
   providers: [],
 })

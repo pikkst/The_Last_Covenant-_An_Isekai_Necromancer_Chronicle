@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { redact, createStructuredLogger, noopLogger } from './logger';
+import { redact, createStructuredLogger, noopLogger, createJsonConsoleSink } from './logger';
 
 describe('logger', () => {
   it('noopLogger does not throw', () => {
@@ -95,5 +95,29 @@ describe('logger', () => {
   it('redact handles numbers and booleans', () => {
     expect(redact(42)).toBe(42);
     expect(redact(true)).toBe(true);
+  });
+
+  it('createJsonConsoleSink emits parseable JSON', () => {
+    const lines: string[] = [];
+    const sink = createJsonConsoleSink();
+    const originalLog = console.log;
+    console.log = (line: string) => lines.push(line);
+    try {
+      sink({
+        timestamp: '2026-08-09T16:00:00.000Z',
+        level: 'info',
+        message: 'hello',
+        traceId: 'trace-1',
+        spanId: 'span-1',
+      });
+    } finally {
+      console.log = originalLog;
+    }
+    expect(lines).toHaveLength(1);
+    const parsed = JSON.parse(lines[0]!);
+    expect(parsed.level).toBe('info');
+    expect(parsed.message).toBe('hello');
+    expect(parsed.traceId).toBe('trace-1');
+    expect(parsed.spanId).toBe('span-1');
   });
 });
