@@ -32,7 +32,7 @@ function createOpenTelemetryTracer(): Tracer {
         const parentContext = traceContext
           ? buildRemoteParentContext(api, traceContext)
           : undefined;
-        const span = apiTracer.startSpan(name, attributes ?? {}, parentContext);
+        const span = apiTracer.startSpan(name, { attributes: attributes ?? {} }, parentContext);
         return new OpenTelemetrySpan(span);
       },
       withSpan: async (name: string, attributes: Record<string, unknown>, traceContext: TraceContext, fn: (span: Span) => Promise<unknown>) => {
