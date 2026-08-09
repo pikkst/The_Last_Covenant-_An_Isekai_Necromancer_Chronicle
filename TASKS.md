@@ -6,7 +6,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 
 ## Phase 0 — Product and engineering foundation
 
-### [~] M001 — Repository and monorepo foundation
+### [x] M001 — Repository and monorepo foundation
 
 **Outcome:** A reproducible TypeScript monorepo boots locally and in CI.
 
@@ -22,7 +22,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 
 **Acceptance:** clean install, lint, typecheck, test, and builds succeed from a fresh clone.
 
-### [ ] M002 — Shared contracts and deterministic primitives
+### [x] M002 — Shared contracts and deterministic primitives
 
 **Outcome:** Project-owned schemas and deterministic fakes exist before game rules.
 
