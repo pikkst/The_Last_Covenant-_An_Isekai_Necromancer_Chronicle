@@ -47,5 +47,5 @@
 
 - Port conflicts: ensure 3000, 3001, 5432, 6379 are free.
 - Node version mismatch: run `node -v` and `pnpm -v`.
-- Stale lockfile: delete `pnpm-lock.yaml` and run `pnpm install`.
+- Lockfile drift: restore `pnpm-lock.yaml` from Git; after intentional manifest changes, regenerate with the pinned pnpm version and commit the resulting lockfile.
 - Docker not running: start Docker Desktop before `docker compose up`.

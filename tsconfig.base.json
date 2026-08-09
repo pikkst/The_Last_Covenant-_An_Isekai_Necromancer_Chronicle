@@ -15,15 +15,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@tlc/contracts": ["packages/contracts/src"],
-      "@tlc/game-engine": ["packages/game-engine/src"],
-      "@tlc/content-schema": ["packages/content-schema/src"],
-      "@tlc/content": ["packages/content/src"],
-      "@tlc/observability": ["packages/observability/src"],
-      "@tlc/test-support": ["packages/test-support/src"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
