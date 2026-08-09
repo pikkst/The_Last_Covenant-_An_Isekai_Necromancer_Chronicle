@@ -18,8 +18,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@tlc/contracts": "workspace:*",
-    "@tlc/game-engine": "workspace:*"
+    "@tlc/contracts": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
