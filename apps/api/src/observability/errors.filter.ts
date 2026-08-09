@@ -1,4 +1,4 @@
-import { Catch, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
+import { Catch, ArgumentsHost, ExceptionFilter, HttpException } from '@nestjs/common';
 import type { Response } from 'express';
 import { AppError, isAppError, httpStatusForCode, ApiErrorResponse } from '@tlc/contracts';
 import { createStructuredLogger, type LogLevel } from '@tlc/observability';
@@ -70,7 +70,7 @@ export class GenericExceptionFilter implements ExceptionFilter {
     const traceId = (request as Request & { traceContext?: { traceId?: string } }).traceContext?.traceId;
     const message = exception.message ?? 'Internal server error';
     const code = isAppError(exception) ? exception.code : 'INTERNAL_ERROR';
-    const status = isAppError(exception) ? httpStatusForCode(code) : 500;
+    const status = isAppError(exception) ? httpStatusForCode(code) : exception instanceof HttpException ? exception.getStatus() : 500;
 
     this.logger.log('error', message, {
       code,

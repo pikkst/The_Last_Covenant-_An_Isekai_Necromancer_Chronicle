@@ -21,7 +21,7 @@ const timeout = setTimeout(() => {
 }, 10000);
 
 const checkHealth = () => {
-  http.get('http://localhost:3001/health', (res) => {
+  http.get('http://localhost:3001/api/v1/health', (res) => {
     clearTimeout(timeout);
     let data = '';
     res.on('data', chunk => data += chunk);
