@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tlc/contracts": ["packages/contracts/src"],
+      "@tlc/game-engine": ["packages/game-engine/src"],
+      "@tlc/content-schema": ["packages/content-schema/src"],
+      "@tlc/content": ["packages/content/src"],
+      "@tlc/observability": ["packages/observability/src"],
+      "@tlc/test-support": ["packages/test-support/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+}

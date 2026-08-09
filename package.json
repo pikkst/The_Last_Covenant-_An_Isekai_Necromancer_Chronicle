@@ -1,0 +1,32 @@
+{
+  "name": "the-last-covenant-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo for The Last Covenant narrative RPG",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=9.12.0"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter \"@tlc/*\" run build",
+    "dev": "pnpm -r --parallel --filter \"@tlc/web @tlc/api @tlc/worker\" run dev",
+    "lint": "pnpm -r --filter \"@tlc/*\" run lint",
+    "typecheck": "pnpm -r --filter \"@tlc/*\" run typecheck",
+    "test": "pnpm -r --filter \"@tlc/*\" run test",
+    "clean": "pnpm -r run clean && rm -rf node_modules .turbo .cache",
+    "db:migrate": "dotenv -e apps/api/.env -- pnpm --filter @tlc/api run db:migrate"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.4.5",
+    "turbo": "^2.0.0",
+    "zod": "^3.23.0",
+    "dotenv-cli": "^8.0.0"
+  }
+}
