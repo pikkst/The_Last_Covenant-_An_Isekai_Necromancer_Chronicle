@@ -1,8 +1,21 @@
+import { createStructuredLogger, createJsonConsoleSink, getTracer } from '@tlc/observability';
+
+const logger = createStructuredLogger({
+  sink: createJsonConsoleSink(),
+});
+
 async function main() {
-  console.log('Worker starting...');
+  const tracer = getTracer();
+  const span = tracer.startSpan('worker.start', { service: 'worker' });
+  try {
+    logger.log('info', 'Worker starting...');
+    span.setAttribute('status', 'started');
+  } finally {
+    span.end();
+  }
 }
 
 main().catch((err) => {
-  console.error('Worker failed', err);
+  logger.log('error', 'Worker failed', { cause: err });
   process.exit(1);
 });

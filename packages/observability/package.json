@@ -17,6 +17,11 @@
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
+  "dependencies": {
+    "@opentelemetry/api": "^1.3.0",
+    "@opentelemetry/sdk-trace-node": "1.8.0",
+    "@tlc/contracts": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "eslint": "^8.57.0",
