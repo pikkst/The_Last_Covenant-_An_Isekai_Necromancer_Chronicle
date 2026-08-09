@@ -10,14 +10,17 @@
   },
   "scripts": {
     "build": "pnpm -r --filter \"@tlc/*\" run build",
-    "dev": "pnpm -r --parallel --filter \"@tlc/web @tlc/api @tlc/worker\" run dev",
+    "dev": "pnpm -r --parallel --filter @tlc/web --filter @tlc/api --filter @tlc/worker run dev",
     "lint": "pnpm -r --filter \"@tlc/*\" run lint",
     "typecheck": "pnpm -r --filter \"@tlc/*\" run typecheck",
     "test": "pnpm -r --filter \"@tlc/*\" run test",
     "clean": "pnpm -r run clean && rm -rf node_modules .turbo .cache",
-    "db:migrate": "dotenv -e apps/api/.env -- pnpm --filter @tlc/api run db:migrate"
+    "db:migrate": "dotenv -e apps/api/.env -- pnpm --filter @tlc/api run db:migrate",
+    "commitlint": "commitlint --edit"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0",
     "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
