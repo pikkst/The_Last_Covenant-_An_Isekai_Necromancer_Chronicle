@@ -27,6 +27,11 @@ describe('Result', () => {
       expect(res.error.message).toBe('fail');
     }
   });
+
+  it('ok is assignable to Result with domain error type', () => {
+    const res: Result<number, AppError> = ok(1);
+    expect(res.ok).toBe(true);
+  });
 });
 
 describe('AppError', () => {
@@ -85,13 +90,28 @@ describe('UtcTimestamp', () => {
 
   it('rejects offset-less date-time strings', () => {
     expect(() => UtcTimestamp.from('2024-06-15T12:00:00')).toThrow(
-      'Offset-less date-time strings are not allowed; use ISO 8601 with Z or explicit offset',
+      'Invalid ISO 8601 date-time format; use YYYY-MM-DDTHH:mm:ss.sssZ or explicit offset',
     );
   });
 
   it('accepts strings with explicit offset', () => {
     const ts = UtcTimestamp.from('2024-06-15T12:00:00+02:00');
     expect(ts.toISOString()).toBe('2024-06-15T10:00:00.000Z');
+  });
+
+  it('rejects non-ISO date-time strings with Z suffix', () => {
+    expect(() => UtcTimestamp.from('01/02/2024Z')).toThrow(
+      'Invalid ISO 8601 date-time format; use YYYY-MM-DDTHH:mm:ss.sssZ or explicit offset',
+    );
+    expect(() => UtcTimestamp.from('March 7, 2024Z')).toThrow(
+      'Invalid ISO 8601 date-time format; use YYYY-MM-DDTHH:mm:ss.sssZ or explicit offset',
+    );
+  });
+
+  it('rejects non-ISO date-time strings with offset suffix', () => {
+    expect(() => UtcTimestamp.from('01/02/2024+00:00')).toThrow(
+      'Invalid ISO 8601 date-time format; use YYYY-MM-DDTHH:mm:ss.sssZ or explicit offset',
+    );
   });
 });
 
@@ -153,6 +173,21 @@ describe('stableStringify', () => {
     );
     expect(() => stableStringify(Symbol('x'))).toThrow(
       'Unsupported serialization type: symbol',
+    );
+  });
+
+  it('rejects non-plain objects', () => {
+    expect(() => stableStringify(new Map([['x', 1]]))).toThrow(
+      'Non-plain objects are not allowed in canonical serialization: Map',
+    );
+    expect(() => stableStringify(new Set([1]))).toThrow(
+      'Non-plain objects are not allowed in canonical serialization: Set',
+    );
+    expect(() => stableStringify(/x/)).toThrow(
+      'Non-plain objects are not allowed in canonical serialization: RegExp',
+    );
+    expect(() => stableStringify(new Error('boom'))).toThrow(
+      'Non-plain objects are not allowed in canonical serialization: Error',
     );
   });
 

@@ -9,6 +9,12 @@ function sortObjectKeys(obj: unknown): unknown {
     return null;
   }
   if (typeof obj === 'object') {
+    const proto = Object.getPrototypeOf(obj);
+    if (proto !== Object.prototype && proto !== null) {
+      throw new Error(
+        `Non-plain objects are not allowed in canonical serialization: ${obj.constructor?.name ?? typeof obj}`,
+      );
+    }
     const sorted: Record<string, unknown> = {};
     for (const key of Object.keys(obj).sort()) {
       sorted[key] = sortObjectKeys((obj as Record<string, unknown>)[key]);

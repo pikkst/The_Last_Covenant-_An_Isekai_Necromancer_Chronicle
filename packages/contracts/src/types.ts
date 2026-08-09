@@ -2,7 +2,7 @@ export type Result<T, E = Error> =
   | { ok: true; value: T }
   | { ok: false; error: E };
 
-export function ok<T>(value: T): Result<T> {
+export function ok<T>(value: T): Result<T, never> {
   return { ok: true, value };
 }
 
@@ -51,10 +51,10 @@ export const UtcTimestamp = {
     } else if (typeof value === 'number') {
       date = new Date(value);
     } else {
-      if (!value.endsWith('Z') && !/[-+]\d{2}:\d{2}$/.test(value)) {
+      if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?(?:Z|[+-]\d{2}:\d{2})$/.test(value)) {
         throw new AppError(
           ErrorCode.VALIDATION_ERROR,
-          'Offset-less date-time strings are not allowed; use ISO 8601 with Z or explicit offset',
+          'Invalid ISO 8601 date-time format; use YYYY-MM-DDTHH:mm:ss.sssZ or explicit offset',
         );
       }
       date = new Date(value);
