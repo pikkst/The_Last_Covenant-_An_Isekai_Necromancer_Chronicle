@@ -69,11 +69,6 @@ describe('UtcTimestamp', () => {
     expect(ts).toBe(date);
   });
 
-  it('creates now', () => {
-    const ts = UtcTimestamp.now();
-    expect(ts).toBeInstanceOf(Date);
-  });
-
   it('creates from ISO string', () => {
     const ts = UtcTimestamp.from('2024-06-15T12:00:00Z');
     expect(ts.toISOString()).toBe('2024-06-15T12:00:00.000Z');
@@ -158,6 +153,24 @@ describe('stableStringify', () => {
     );
     expect(() => stableStringify(Symbol('x'))).toThrow(
       'Unsupported serialization type: symbol',
+    );
+  });
+
+  it('rejects non-finite numbers', () => {
+    expect(() => stableStringify(NaN)).toThrow(
+      'Non-finite numbers are not allowed in canonical serialization: NaN',
+    );
+    expect(() => stableStringify(Infinity)).toThrow(
+      'Non-finite numbers are not allowed in canonical serialization: Infinity',
+    );
+    expect(() => stableStringify(-Infinity)).toThrow(
+      'Non-finite numbers are not allowed in canonical serialization: -Infinity',
+    );
+  });
+
+  it('rejects NaN in objects', () => {
+    expect(() => stableStringify({ value: NaN })).toThrow(
+      'Non-finite numbers are not allowed in canonical serialization: NaN',
     );
   });
 });

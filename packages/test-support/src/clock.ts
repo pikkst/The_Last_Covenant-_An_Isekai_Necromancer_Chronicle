@@ -1,17 +1,17 @@
-import { Clock } from '@tlc/contracts';
+import { Clock, UtcTimestamp } from '@tlc/contracts';
 
 export class FakeClock implements Clock {
-  private fixed: Date;
+  private fixed: UtcTimestamp;
 
   constructor(fixed: Date) {
-    this.fixed = new Date(fixed.getTime());
+    this.fixed = new Date(fixed.getTime()) as UtcTimestamp;
   }
 
-  now(): Date {
-    return new Date(this.fixed.getTime());
+  now(): UtcTimestamp {
+    return new Date(this.fixed.getTime()) as UtcTimestamp;
   }
 
   advance(ms: number): void {
-    this.fixed = new Date(this.fixed.getTime() + ms);
+    this.fixed = new Date(this.fixed.getTime() + ms) as UtcTimestamp;
   }
 }

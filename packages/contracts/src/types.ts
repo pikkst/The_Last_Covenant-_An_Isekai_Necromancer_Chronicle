@@ -44,7 +44,6 @@ export type UtcTimestamp = Date & { readonly __brand: 'UtcTimestamp' };
 
 export const UtcTimestamp = {
   create: (value: Date): UtcTimestamp => value as UtcTimestamp,
-  now: (): UtcTimestamp => new Date() as UtcTimestamp,
   from: (value: string | number | Date): UtcTimestamp => {
     let date: Date;
     if (value instanceof Date) {
@@ -95,7 +94,7 @@ export interface PageResponse<T> {
 }
 
 export interface Clock {
-  now(): Date;
+  now(): UtcTimestamp;
 }
 
 export interface IdGenerator {

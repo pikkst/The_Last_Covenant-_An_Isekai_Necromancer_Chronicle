@@ -8,7 +8,7 @@ export function createTestBuilder<T>(initial: T): TestBuilder<T> {
   const initialState = structuredClone(initial);
 
   const builder = (overrides: Partial<T> = {}): TestBuilder<T> => {
-    const state = { ...initialState, ...overrides };
+    const state = structuredClone({ ...initialState, ...overrides });
 
     return {
       build: (): T => structuredClone(state),

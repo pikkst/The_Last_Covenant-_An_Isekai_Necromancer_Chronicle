@@ -5,6 +5,7 @@ interface TestEntity {
   name: string;
   count: number;
   active: boolean;
+  nested?: { hp: number };
 }
 
 describe('builders', () => {
@@ -25,5 +26,13 @@ describe('builders', () => {
     builder.with('count', 5);
     builder.reset();
     expect(builder.build()).toEqual({ name: 'a', count: 0, active: false });
+  });
+
+  it('isolates nested object overrides from external mutation', () => {
+    const nested = { hp: 10 };
+    const builder = createTestBuilder<TestEntity>({ name: 'a', count: 0, active: false });
+    const modified = builder.with('name', 'b').with('nested', nested);
+    nested.hp = 1;
+    expect(modified.build()).toEqual({ name: 'b', count: 0, active: false, nested: { hp: 10 } });
   });
 });
