@@ -46,7 +46,20 @@ export const UtcTimestamp = {
   create: (value: Date): UtcTimestamp => value as UtcTimestamp,
   now: (): UtcTimestamp => new Date() as UtcTimestamp,
   from: (value: string | number | Date): UtcTimestamp => {
-    const date = value instanceof Date ? value : new Date(value);
+    let date: Date;
+    if (value instanceof Date) {
+      date = value;
+    } else if (typeof value === 'number') {
+      date = new Date(value);
+    } else {
+      if (!value.endsWith('Z') && !/[-+]\d{2}:\d{2}$/.test(value)) {
+        throw new AppError(
+          ErrorCode.VALIDATION_ERROR,
+          'Offset-less date-time strings are not allowed; use ISO 8601 with Z or explicit offset',
+        );
+      }
+      date = new Date(value);
+    }
     if (Number.isNaN(date.getTime())) {
       throw new AppError(ErrorCode.VALIDATION_ERROR, 'Invalid timestamp');
     }

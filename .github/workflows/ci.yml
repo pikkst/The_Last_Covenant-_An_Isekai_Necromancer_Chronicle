@@ -25,11 +25,25 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: |
-          MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "")
-          if [ -n "$MERGE_BASE" ]; then
-            pnpm commitlint --from=$MERGE_BASE --to=HEAD
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "")
+            if [ -n "$MERGE_BASE" ]; then
+              pnpm commitlint --from=$MERGE_BASE --to=HEAD
+            else
+              pnpm commitlint --from=HEAD --to=HEAD
+            fi
           else
-            pnpm commitlint --from=HEAD --to=HEAD
+            BEFORE="${{ github.event.before }}"
+            if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "")
+              if [ -n "$MERGE_BASE" ]; then
+                pnpm commitlint --from=$MERGE_BASE --to=HEAD
+              else
+                pnpm commitlint --from=HEAD --to=HEAD
+              fi
+            else
+              pnpm commitlint --from=$BEFORE --to=HEAD
+            fi
           fi
 
   test:

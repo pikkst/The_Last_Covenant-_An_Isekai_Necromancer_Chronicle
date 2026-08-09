@@ -6,13 +6,13 @@ export interface ReplayFixture {
 
 export function createReplayFixture(): ReplayFixture {
   const recordings = new Map<string, number[]>();
-  let currentSequence: string | null = null;
-  let index = 0;
+  const cursors = new Map<string, number>();
 
   return {
     record: (name: string, value: number): void => {
       if (!recordings.has(name)) {
         recordings.set(name, []);
+        cursors.set(name, 0);
       }
       recordings.get(name)!.push(value);
     },
@@ -22,19 +22,18 @@ export function createReplayFixture(): ReplayFixture {
       if (!seq || seq.length === 0) {
         throw new Error(`No recorded values for ${name}`);
       }
-      if (currentSequence !== name) {
-        currentSequence = name;
-        index = 0;
-      }
+      const index = cursors.get(name)!;
       if (index >= seq.length) {
         throw new Error(`Replay exhausted for ${name}`);
       }
-      return seq[index++];
+      cursors.set(name, index + 1);
+      return seq[index];
     },
 
     reset: (): void => {
-      currentSequence = null;
-      index = 0;
+      for (const key of cursors.keys()) {
+        cursors.set(key, 0);
+      }
     },
   };
 }

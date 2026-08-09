@@ -87,6 +87,17 @@ describe('UtcTimestamp', () => {
   it('throws on invalid input', () => {
     expect(() => UtcTimestamp.from('not-a-date')).toThrow();
   });
+
+  it('rejects offset-less date-time strings', () => {
+    expect(() => UtcTimestamp.from('2024-06-15T12:00:00')).toThrow(
+      'Offset-less date-time strings are not allowed; use ISO 8601 with Z or explicit offset',
+    );
+  });
+
+  it('accepts strings with explicit offset', () => {
+    const ts = UtcTimestamp.from('2024-06-15T12:00:00+02:00');
+    expect(ts.toISOString()).toBe('2024-06-15T10:00:00.000Z');
+  });
 });
 
 describe('Version', () => {
@@ -129,19 +140,48 @@ describe('stableStringify', () => {
     expect(stableStringify('hello')).toBe('"hello"');
     expect(stableStringify(42)).toBe('42');
   });
+
+  it('serializes dates as ISO strings', () => {
+    const date = new Date('2024-01-01T00:00:00Z');
+    expect(stableStringify({ at: date })).toBe('{"at":"2024-01-01T00:00:00.000Z"}');
+  });
+
+  it('produces different canonical strings for different dates', () => {
+    const a = { at: new Date('2024-01-01T00:00:00Z') };
+    const b = { at: new Date('2024-01-02T00:00:00Z') };
+    expect(stableStringify(a)).not.toBe(stableStringify(b));
+  });
+
+  it('throws on unsupported types', () => {
+    expect(() => stableStringify(() => {})).toThrow(
+      'Unsupported serialization type: function',
+    );
+    expect(() => stableStringify(Symbol('x'))).toThrow(
+      'Unsupported serialization type: symbol',
+    );
+  });
 });
 
 describe('stableHash', () => {
-  it('produces deterministic output', () => {
-    expect(stableHash('abc')).toBe(stableHash('abc'));
+  it('produces deterministic output', async () => {
+    const a = await stableHash('abc');
+    const b = await stableHash('abc');
+    expect(a).toBe(b);
   });
 
-  it('produces different output for different inputs', () => {
-    expect(stableHash('abc')).not.toBe(stableHash('abd'));
+  it('produces different output for different inputs', async () => {
+    const a = await stableHash('abc');
+    const b = await stableHash('abd');
+    expect(a).not.toBe(b);
   });
 
-  it('returns a hex string', () => {
-    const hash = stableHash('test');
-    expect(hash).toMatch(/^[0-9a-f]{16}$/);
+  it('returns a 64-character hex string', async () => {
+    const hash = await stableHash('test');
+    expect(hash).toMatch(/^[0-9a-f]{64}$/);
+  });
+
+  it('matches SHA-256 test vector', async () => {
+    const hash = await stableHash('');
+    expect(hash).toBe('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');
   });
 });

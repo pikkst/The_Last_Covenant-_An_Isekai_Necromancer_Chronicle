@@ -32,4 +32,16 @@ describe('replay', () => {
     const fixture = createReplayFixture();
     expect(() => fixture.replay('missing')).toThrow();
   });
+
+  it('maintains independent cursors for interleaved replays', () => {
+    const fixture = createReplayFixture();
+    fixture.record('a', 1);
+    fixture.record('a', 2);
+    fixture.record('b', 10);
+    fixture.record('b', 20);
+    expect(fixture.replay('a')).toBe(1);
+    expect(fixture.replay('b')).toBe(10);
+    expect(fixture.replay('a')).toBe(2);
+    expect(fixture.replay('b')).toBe(20);
+  });
 });

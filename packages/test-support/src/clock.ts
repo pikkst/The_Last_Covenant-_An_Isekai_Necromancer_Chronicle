@@ -1,10 +1,14 @@
 import { Clock } from '@tlc/contracts';
 
 export class FakeClock implements Clock {
-  constructor(private fixed: Date) {}
+  private fixed: Date;
+
+  constructor(fixed: Date) {
+    this.fixed = new Date(fixed.getTime());
+  }
 
   now(): Date {
-    return this.fixed;
+    return new Date(this.fixed.getTime());
   }
 
   advance(ms: number): void {
