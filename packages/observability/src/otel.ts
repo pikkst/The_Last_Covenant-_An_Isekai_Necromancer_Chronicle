@@ -26,7 +26,7 @@ export function resetOpenTelemetry(): void {
 function createOpenTelemetryTracer(): Tracer {
   try {
     initializeOpenTelemetry();
-    // @ts-ignore optional peer
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const api = require('@opentelemetry/api');
     const apiTracer = api.trace.getTracer('@tlc/observability');
     const impl = {

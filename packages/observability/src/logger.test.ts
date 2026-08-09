@@ -100,7 +100,9 @@ describe('logger', () => {
   it('createJsonConsoleSink emits parseable JSON', () => {
     const lines: string[] = [];
     const sink = createJsonConsoleSink();
+    // eslint-disable-next-line no-console
     const originalLog = console.log;
+    // eslint-disable-next-line no-console
     console.log = (line: string) => lines.push(line);
     try {
       sink({
@@ -111,6 +113,7 @@ describe('logger', () => {
         spanId: 'span-1',
       });
     } finally {
+      // eslint-disable-next-line no-console
       console.log = originalLog;
     }
     expect(lines).toHaveLength(1);
