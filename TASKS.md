@@ -32,7 +32,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - add deterministic test builders and replay fixtures;
 - prevent framework/SDK types from leaking into domain packages.
 
-### [ ] M003 — Observability and error foundation
+### [x] M003 — Observability and error foundation
 
 **Outcome:** All services use structured, correlated, privacy-safe diagnostics.
 
@@ -45,7 +45,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 
 ## Phase 1 — Identity, saves, and content
 
-### [ ] M004 — Authentication and account security
+### [x] M004 — Authentication and account security
 
 - register, login, logout, refresh/session rotation, password reset;
 - secure password hashing and generic failures;
@@ -54,7 +54,7 @@ Tasks are ordered by dependency. Do not start a later production milestone by by
 - audit security-sensitive events;
 - complete authorization and abuse tests.
 
-### [ ] M005 — Save-slot lifecycle
+### [x] M005 — Save-slot lifecycle
 
 - create, list, rename, archive, and delete save slots;
 - autosave and explicit checkpoints;
