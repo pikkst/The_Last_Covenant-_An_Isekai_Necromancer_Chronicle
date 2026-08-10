@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { SessionService } from './session.service';
 import { AuditService } from './audit.service';
 import { RateLimitService } from './rate-limit.service';
-import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.service';
 import { ConfigModule } from '../config.module';
 import { ConfigService } from '../config.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -28,7 +28,7 @@ import { csrfMiddleware } from './middleware/csrf.middleware';
   ],
   controllers: [AuthController],
   providers: [AuthService, SessionService, AuditService, RateLimitService, JwtAuthGuard, OptionalAuthGuard, RateLimitGuard],
-  exports: [AuthService, SessionService, AuditService, RateLimitService, JwtAuthGuard, OptionalAuthGuard],
+  exports: [AuthService, SessionService, AuditService, RateLimitService, JwtAuthGuard, OptionalAuthGuard, JwtModule, ConfigModule],
 })
 export class AuthModule {
   configure(consumer: import('@nestjs/common').MiddlewareConsumer): void {
